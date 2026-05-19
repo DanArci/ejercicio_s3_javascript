@@ -1,4 +1,4 @@
-let lista = document.getElementById('lista')
+let lista = document.getElementById('task-list')
 let storage = localStorage
 let notas = []
 

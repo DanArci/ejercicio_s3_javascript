@@ -1,14 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Workspace Inteligente - Riwi</title>
 </head>
+
 <body>
-    <h1>Notas</h1>
-    <ul id="lista"></ul>
-    <button>------------------</button>
+    <section class="app-container" id="app-root">
+
+        <header class="app-header">
+            <h1>Workspace Inteligente</h1>
+        </header>
+
+        <main class="app-content">
+
+            <section class="task-management" aria-labelledby="mgmt-heading">
+                <h2 id="mgmt-heading" class="sr-only">Gestión y búsqueda de tareas</h2>
+
+                <form id="task-form" class="task-form">
+                    <label for="task-input" class="sr-only">New Taks</label>
+                    <input type="text" id="task-input" placeholder="What task do you have pending?" required
+                        autocomplete="off">
+                    <button type="submit" class="btn-primary">Add Task</button>
+                </form>
+
+                <form id="search-form" class="search-box">
+                    <label for="search-input" class="sr-only">Search task's list</label>
+                    <input type="search" id="search-input" placeholder="EX: Riwi">
+                </form>
+            </section>
+
+            <section class="task-status" aria-labelledby="status-heading">
+                <fieldset class="filters-group">
+                    <legend class="sr-only">Filter Taskss</legend>
+
+                    <label class="filter-option">
+                        <input type="radio" name="task-filter" value="all" checked>
+                        <span class="filter-label">All</span>
+                    </label>
+
+                    <label class="filter-option">
+                        <input type="radio" name="task-filter" value="pending">
+                        <span class="filter-label">Pending</span>
+                    </label>
+
+                    <label class="filter-option">
+                        <input type="radio" name="task-filter" value="completed">
+                        <span class="filter-label">Completed</span>
+                    </label>
+                </fieldset>
+            </section>
+
+            <section class="task-display" aria-labelledby="list-heading">
+                <h2 id="list-heading" class="sr-only">Task's List</h2>
+
+                <ul id="task-list" class="task-list" aria-live="polite" aria-atomic="true">
+                    <li>Algo</li>
+                </ul>
+            </section>
+
+        </main>
+
+    </section>
+
+    <script src="./app.js"></script>
 </body>
-<script src="./app.js"></script>
+
 </html>
