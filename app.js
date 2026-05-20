@@ -1,5 +1,6 @@
 let list = document.getElementById('task-list')
 let form = document.getElementById('task-form')
+let searchForm = document.getElementById('search-task-form')
 let storage = localStorage
 
 function welcome_message() {
@@ -18,13 +19,22 @@ function add_note(title, description) {
     load_localStorage(storage)
 }
 
-function load_localStorage(storage) {
+function load_localStorage(storage, search = "") {
+    // Obtiene la ultima busqueda realizada
+    const lastSearch = sessionStorage.getItem('lastSearch')
+
+    // Si hay una busqueda guardada, la asigna a search para que se muestre al recargar la pagina
+    if (lastSearch && !search) search = lastSearch
+
     // Obtiene el ultimo filtro colocado
     const lastFilterSelected = sessionStorage.getItem('lastFilterSelected')
+
     // Si hay un filtro guardado entra al condicional
     if (lastFilterSelected) {
+
         // Busca el radio que tenga el valor del filtro guardado y lo guarda en savedRadio
         const savedRadio = document.querySelector(`input[name="task-filter"][value="${lastFilterSelected}"]`)
+
         // Si encuentra el radio, lo selecciona
         if (savedRadio) savedRadio.checked = true
     }
@@ -33,6 +43,7 @@ function load_localStorage(storage) {
     const filter = document.querySelector('input[name="task-filter"]:checked').value
     list.innerHTML = ""
     let html = ""
+
     for (const key in storage) {
         // hasOwnProperty es un metodo que devuelve true si el objeto tiene la propiedad especificada, en este caso key, y false si no la tiene. Esto es para evitar iterar sobre propiedades heredadas del prototipo de localStorage.
         if (!Object.hasOwn(storage, key)) continue;
@@ -45,6 +56,14 @@ function load_localStorage(storage) {
         // Si el filtro no concuerda con el status de la tarea la salta
         if (filter === 'pending' && status)     continue
         if (filter === 'completed' && !status)      continue
+
+        // Busqueda
+        console.log(key);
+        console.log(search);
+        
+        
+
+        if (search && !key.toLowerCase().includes(search.toLowerCase()))continue
 
         // Aca se usa un operador ternario para asignar la clase completed al li si el status es true, y si no, no asignarle ninguna clase
         html += `
@@ -101,6 +120,13 @@ form.addEventListener('submit', (event) => {
     form.reset();
 });
 
+searchForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const title = document.getElementById('search-task-tittle').value
+    sessionStorage.setItem('lastSearch', title)
+    load_localStorage(storage, title)
+});
+
 // Filtro de tareas ----------------------------------
 document.querySelectorAll('input[name="task-filter"]').forEach((radio) => {
     radio.addEventListener('change', () => {
@@ -110,4 +136,4 @@ document.querySelectorAll('input[name="task-filter"]').forEach((radio) => {
 })
 
 load_localStorage(storage)
-welcome_message()
+// welcome_message()
