@@ -2,7 +2,7 @@
 const list = document.getElementById('task-list')
 const form = document.getElementById('task-form')
 const searchInput = document.getElementById('search-task-tittle')
-const storage = localStorage
+let storage = localStorage
 
 // Funcion para el mensaje de bienvenida
 // Al cargar la pagina por primera vez te pide tu nombre
@@ -140,4 +140,4 @@ document.querySelectorAll('input[name="task-filter"]').forEach((radio) => {
 })
 
 load_localStorage(storage)
-// welcome_message()
+welcome_message()
