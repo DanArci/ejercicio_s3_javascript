@@ -76,6 +76,7 @@ form.addEventListener('submit', (event) => {
     const description = document.getElementById('task-input').value
     let nota = [`${description}`, false]
     add_note(title, nota)
+    form.reset();
 });
 
 document.querySelectorAll('input[name="task-filter"]').forEach((radio) => {
