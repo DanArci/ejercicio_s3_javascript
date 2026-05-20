@@ -1,18 +1,25 @@
-let list = document.getElementById('task-list')
-let form = document.getElementById('task-form')
-let searchInput = document.getElementById('search-task-tittle')
-let storage = localStorage
+// Variables globales
+const list = document.getElementById('task-list')
+const form = document.getElementById('task-form')
+const searchInput = document.getElementById('search-task-tittle')
+const storage = localStorage
 
+// Funcion para el mensaje de bienvenida
+// Al cargar la pagina por primera vez te pide tu nombre
+// Luego lo guarda en el sessionStorage y no te lo pide si recargas la pagina
 function welcome_message() {
+    // Verifica si hay un nombre en el session Storage. Si lo hay muestra el mensaje y termina la funcion
     if (sessionStorage.getItem('name')) {
         alert(`Hello, ${sessionStorage.getItem('name')}. Welcome to your task manager`)
         return
     } 
+    // Si no lo hay lo pide y vuelve a llamar a la funcion
     const name = prompt("Welcome. Please enter your name:") 
     sessionStorage.setItem('name', name)
     welcome_message()
 }
 
+// Esta funcion añade una nota al localStorage
 function add_note(title, description) { 
     localStorage.setItem(title,JSON.stringify(description))
     storage = localStorage
@@ -60,12 +67,7 @@ function load_localStorage(storage, search = "") {
         if (filter === 'pending' && status)     continue
         if (filter === 'completed' && !status)      continue
 
-        // Busqueda
-        console.log(key);
-        console.log(search);
-        
-        
-
+        // Si hay una busqueda y el titulo de la tarea no incluye la busqueda, la salta
         if (search && !key.toLowerCase().includes(search.toLowerCase()))continue
 
         // Aca se usa un operador ternario para asignar la clase completed al li si el status es true, y si no, no asignarle ninguna clase
