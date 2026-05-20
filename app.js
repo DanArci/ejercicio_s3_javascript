@@ -1,6 +1,6 @@
 let list = document.getElementById('task-list')
 let form = document.getElementById('task-form')
-let searchForm = document.getElementById('search-task-form')
+let searchInput = document.getElementById('search-task-tittle')
 let storage = localStorage
 
 function welcome_message() {
@@ -23,8 +23,11 @@ function load_localStorage(storage, search = "") {
     // Obtiene la ultima busqueda realizada
     const lastSearch = sessionStorage.getItem('lastSearch')
 
-    // Si hay una busqueda guardada, la asigna a search para que se muestre al recargar la pagina
-    if (lastSearch && !search) search = lastSearch
+    if (lastSearch) {
+        const searchInput = document.getElementById('search-task-tittle')
+        if (searchInput) searchInput.value = lastSearch
+        if (!search) search = lastSearch
+    }
 
     // Obtiene el ultimo filtro colocado
     const lastFilterSelected = sessionStorage.getItem('lastFilterSelected')
@@ -120,12 +123,11 @@ form.addEventListener('submit', (event) => {
     form.reset();
 });
 
-searchForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const title = document.getElementById('search-task-tittle').value
+searchInput.addEventListener('input', () => {
+    const title = searchInput.value
     sessionStorage.setItem('lastSearch', title)
     load_localStorage(storage, title)
-});
+})
 
 // Filtro de tareas ----------------------------------
 document.querySelectorAll('input[name="task-filter"]').forEach((radio) => {
