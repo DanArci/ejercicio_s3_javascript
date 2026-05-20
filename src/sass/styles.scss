@@ -67,11 +67,20 @@ body {
     gap: 1.5rem;
 }
 
+.task-management{
+    display: flex;
+    gap: 1.7rem;
+}
+
 // Formulario de Tareas
 .task-form {
     display: flex;
     flex-direction: column;
     gap: .75rem;
+
+    #search-task-input{
+        opacity: 0;
+    }
 
     input[type="text"] {
         width: 100%;
