@@ -2,6 +2,16 @@ let list = document.getElementById('task-list')
 let form = document.getElementById('task-form')
 let storage = localStorage
 
+function welcome_message() {
+    if (sessionStorage.getItem('name')) {
+        alert(`Hello, ${sessionStorage.getItem('name')}. Welcome to your task manager`)
+        return
+    } 
+    const name = prompt("Welcome. Please enter your name:") 
+    sessionStorage.setItem('name', name)
+    welcome_message()
+}
+
 function add_note(title, description) { 
     localStorage.setItem(title,JSON.stringify(description))
     storage = localStorage
@@ -9,6 +19,17 @@ function add_note(title, description) {
 }
 
 function load_localStorage(storage) {
+    // Obtiene el ultimo filtro colocado
+    const lastFilterSelected = sessionStorage.getItem('lastFilterSelected')
+    // Si hay un filtro guardado entra al condicional
+    if (lastFilterSelected) {
+        // Busca el radio que tenga el valor del filtro guardado y lo guarda en savedRadio
+        const savedRadio = document.querySelector(`input[name="task-filter"][value="${lastFilterSelected}"]`)
+        // Si encuentra el radio, lo selecciona
+        if (savedRadio) savedRadio.checked = true
+    }
+
+    // Obtiene el valor del filtro actual 
     const filter = document.querySelector('input[name="task-filter"]:checked').value
     list.innerHTML = ""
     let html = ""
@@ -21,8 +42,9 @@ function load_localStorage(storage) {
         let status = content[1]
         let id = key.replace(/ /g,"_")
 
-        if (filter === 'pending' && status) continue
-        if (filter === 'completed' && !status) continue
+        // Si el filtro no concuerda con el status de la tarea la salta
+        if (filter === 'pending' && status)     continue
+        if (filter === 'completed' && !status)      continue
 
         // Aca se usa un operador ternario para asignar la clase completed al li si el status es true, y si no, no asignarle ninguna clase
         html += `
@@ -79,8 +101,13 @@ form.addEventListener('submit', (event) => {
     form.reset();
 });
 
+// Filtro de tareas ----------------------------------
 document.querySelectorAll('input[name="task-filter"]').forEach((radio) => {
-    radio.addEventListener('change', () => load_localStorage(storage))
+    radio.addEventListener('change', () => {
+        sessionStorage.setItem('lastFilterSelected', radio.value)
+        load_localStorage(storage)
+    })
 })
 
 load_localStorage(storage)
+welcome_message()
