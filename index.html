@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workspace Inteligente - Riwi</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
 </head>
 
 <body>
@@ -18,12 +18,9 @@
         <main class="app-content">
 
             <section class="task-management" aria-labelledby="mgmt-heading">
-                <h2 id="mgmt-heading" class="sr-only">Task Manager</h2>
 
                 <form id="task-form" class="task-form">
-                    <label for="task-tittle" class="sr-only">Task Title</label>
                     <input type="text" id="task-tittle" placeholder="Task Title" required autocomplete="off">
-                    <label for="task-input" class="sr-only">Task Description</label>
                     <input type="text" id="task-input" placeholder="Task Description" required autocomplete="off">
                     <button type="submit" class="btn-primary">Add Task</button>
                 </form>
@@ -32,7 +29,6 @@
 
             <section class="task-status" aria-labelledby="status-heading">
                 <fieldset class="filters-group">
-                    <legend class="sr-only">Filter Tasks</legend>
 
                     <label class="filter-option">
                         <input type="radio" name="task-filter" value="all" checked>
@@ -52,10 +48,9 @@
             </section>
 
             <section class="task-display" aria-labelledby="list-heading">
-                <h2 id="list-heading" class="sr-only">Task's List</h2>
 
                 <ul id="task-list" class="task-list" aria-live="polite" aria-atomic="true">
-                    <li>Aca estaran tus notas</li>
+                    
                 </ul>
             </section>
 
